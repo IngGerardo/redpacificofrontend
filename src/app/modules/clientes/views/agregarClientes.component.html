@@ -1,0 +1,54 @@
+    <div class="modal-header bg-primary">
+    <h4 class="modal-title pull-left">Agregar un Nuevo Cliente</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="onCancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="nombre">Nombre: </label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="nom_cliente" class="form-control" placeholder="Nombre"
+                    [ngClass]="{ 'is-invalid': submitted && form.nom_cliente.errors }" onlyLetters maxlength="50"/>
+                    <div *ngIf="submitted && form.nom_cliente.errors" class="invalid-feedback">
+                        <div *ngIf="form.nom_cliente.errors.required">El Nombre es requerido.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="des_apellidopaterno">Apellido Paterno: </label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="des_apellidopaterno" class="form-control" placeholder="Apellido Paterno"
+                    [ngClass]="{ 'is-invalid': submitted && form.des_apellidopaterno.errors }" onlyLetters maxlength="50"/>
+                    <div *ngIf="submitted && form.des_apellidopaterno.errors" class="invalid-feedback">
+                        <div *ngIf="form.des_apellidopaterno.errors.required">El Apellido Paterno es requerido.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="des_apellidomaterno">Apellido Materno: </label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="des_apellidomaterno" class="form-control" placeholder="Apellido Materno"
+                    [ngClass]="{ 'is-invalid': submitted && form.des_apellidomaterno.errors }" onlyLetters maxlength="50"/>
+                    <div *ngIf="submitted && form.des_apellidomaterno.errors" class="invalid-feedback">
+                        <div *ngIf="form.des_apellidomaterno.errors.required">El Apellido Materno es requerido.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="des_rfc">RFC: </label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="des_rfc" class="form-control" placeholder="RFC"
+                    [ngClass]="{ 'is-invalid': submitted && form.des_rfc.errors }" onlyAlphanumeric onlyUppercase maxlength="13"/>
+                    <div *ngIf="submitted && form.des_rfc.errors" class="invalid-feedback">
+                        <div *ngIf="form.des_rfc.errors.required">El RFC es requerido.</div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-warning" (click)="onCancel()">Cerrar</button>
+    </div>
+    </form>
