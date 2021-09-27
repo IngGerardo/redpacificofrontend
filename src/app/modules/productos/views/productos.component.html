@@ -76,7 +76,7 @@
                     type="button" (click)="eliminarProducto(producto.idu_producto)"><span class="fa fa-trash"> Eliminar</span></button>
                 </td>
               </tr>
-              <tr>
+              <tr [hidden]="productos.length == 0">
                 <td colspan="8" align="center">
                   <pagination-controls (pageChange)="pageChanged($event);" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
                 </td>

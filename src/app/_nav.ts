@@ -17,5 +17,15 @@ export const navItems = [
     name: 'Productos',
     url: '/productos',
     icon: 'fa fa-shopping-cart',
+  },
+  {
+    name: 'Configuración',
+    url: '/configuracion',
+    icon: 'fa fa-cog',
+  },
+  {
+    name: 'Ventas',
+    url: '/ventas',
+    icon: 'fa fa-usd',
   }
 ];

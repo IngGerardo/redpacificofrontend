@@ -27,12 +27,11 @@ export class ClientesComponent implements OnInit {
     itemsPerPage : 10,
     totalItems: 0
   };
-  nombretipo: string;
-  nombrerol: string;
   constructor(private modalService: BsModalService, 
   private clientesService: ClientesService, private _el: ElementRef) {}
 
   ngOnInit() {
+    this.clientes = [];
     this.cargarClientes();
   }
 
@@ -156,6 +155,13 @@ export class ClientesComponent implements OnInit {
     this.reverse = !this.reverse;
   }
 
+  /**
+  * evento que cambia la pagina en el paginador de la tabla.
+  *
+  * @author Gerardo Ortiz
+  * @return void
+  * @param event key
+  */
   public pageChanged(event):void {
     this.configPagination.currentPage = event;
     this.cargarClientes();

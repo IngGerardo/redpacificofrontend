@@ -1,0 +1,50 @@
+<div class="animated fadeIn">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="card">
+            <div class="card-header">
+            <strong>Configuración</strong>
+            </div>
+            <div class="card-body">
+                <div class="form-group row" [hidden]="true">
+                    <label class="col-md-3 col-form-label" for="idu_configuracion"></label>
+                    <div class="col-md-9">
+                        <input type="text" formControlName="idu_configuracion" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="num_tasa">Tasa Financiamiento: </label>
+                    <div class="col-md-9">
+                        <input type="text" formControlName="num_tasa" class="form-control" placeholder="Tasa Financiamiento"
+                        [ngClass]="{ 'is-invalid': submitted && form.num_tasa.errors }" onlyNumbersDecimal maxlength="5"/>
+                        <div *ngIf="submitted && form.num_tasa.errors" class="invalid-feedback">
+                            <div *ngIf="form.num_tasa.errors.required">La Tasa de financiamiento es requerida.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="num_enganche">% Enganche: </label>
+                    <div class="col-md-9">
+                        <input type="text" formControlName="num_enganche" class="form-control" placeholder="Enganche"
+                        [ngClass]="{ 'is-invalid': submitted && form.num_enganche.errors }" onlyNumbers maxlength="5"/>
+                        <div *ngIf="submitted && form.num_enganche.errors" class="invalid-feedback">
+                            <div *ngIf="form.num_enganche.errors.required">El Enganche es requerido.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="num_plazo">Plazo: </label>
+                    <div class="col-md-9">
+                        <input type="text" formControlName="num_plazo" class="form-control" placeholder="Plazo"
+                        [ngClass]="{ 'is-invalid': submitted && form.num_plazo.errors }" onlyNumbers maxlength="5"/>
+                        <div *ngIf="submitted && form.num_plazo.errors" class="invalid-feedback">
+                            <div *ngIf="form.num_plazo.errors.required">El Plazo es requerido.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-primary float-right">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>

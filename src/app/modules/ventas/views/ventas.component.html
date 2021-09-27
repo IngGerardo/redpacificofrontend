@@ -1,0 +1,104 @@
+<div class="animated fadeIn">
+    <form (ngSubmit)="onSubmit()">
+        <div class="card">
+            <div class="card-header">
+            <strong>Ventas</strong>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="onSubmit()" class="form-horizontal" autocomplete="off">
+                    <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="hf-email">Nombre del Cliente: </label>
+                      <div class="col-md-6">
+                        <div class="form-group has-search">
+                          <span class="fa fa-search form-control-feedback"></span>
+                          <input type="text" class="form-control" onlyLetters maxlength="50" placeholder="Buscar Cliente"
+                          [(ngModel)]="cliente" name="cliente" [typeahead]="clientes" (typeaheadOnSelect)="onSelectCliente($event)"
+                          typeaheadOptionField="nom_cliente" (typeaheadNoResults)="typeaheadNoResultsCliente($event)" >
+                          <div class="alert alert-danger" *ngIf="noResultCliente">No Resultados Encontrados</div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 text-center">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="hf-email">Nombre del Producto: </label>
+                        <div class="col-md-4">
+                          <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control" onlyLetters maxlength="50" placeholder="Buscar Producto"
+                            [(ngModel)]="producto" name="producto" [typeahead]="productos" (typeaheadOnSelect)="onSelectProducto($event)"
+                            typeaheadOptionField="des_producto" (typeaheadNoResults)="typeaheadNoResultsProducto($event)" >
+                            <div class="alert alert-danger" *ngIf="noResultProducto">No Resultados Encontrados</div>
+                          </div>
+                        </div>
+                        <label class="col-md-2 col-form-label" for="hf-email">Cantidad: </label>
+                        <div class="col-md-3">
+                            <input type="text" [(ngModel)]="cantidad" name="cantidad" 
+                            class="form-control" placeholder="Cantidad" onlyNumbers maxlength="5"/>
+                        </div>
+                      </div>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="pointer">
+                        <tr>
+                          <th class="text-center align-middle">Descripción Producto</th>
+                          <th class="text-center align-middle">Modelo</th>
+                          <th class="text-center align-middle">Cantidad</th>
+                          <th class="text-center align-middle">Precio</th>
+                          <th class="text-center align-middle">Importe</th>
+                          <th class="text-center align-middle">Eliminar</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let venta of ventasCliente | 
+                        paginate: configPagination" style="cursor: pointer;">
+                          <td class="text-center align-middle">{{ venta.des_producto }}</td>
+                          <td class="text-center align-middle">{{ venta.des_modelo }}</td>
+                          <td class="text-center align-middle">{{ venta.num_cantidad }}</td>
+                          <td class="text-center align-middle">{{ venta.num_precio | currency }}</td>
+                          <td class="text-center align-middle">{{ venta.num_precio*venta.num_cantidad | currency }}</td>
+                          <td class="text-center align-middle">
+                              <button tooltip="Eliminar Venta." class="btn btn-sm btn-pill btn-danger" 
+                              type="button" (click)="eliminarVenta(venta.idu_venta)"><span class="fa fa-trash"> Eliminar</span></button>
+                          </td>
+                        </tr>
+                        <tr [hidden]="ventasCliente.length == 0">
+                          <td colspan="6" align="center">
+                            <pagination-controls (pageChange)="pageChanged($event);" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                
+                <form class="pull-right">
+                    <div class="form-group row">
+                      <label for="staticEmail" class="col-sm-6 col-form-label"><b>Enganche:</b></label>
+                      <div class="col-sm-6">
+                        <input type="text" readonly class="form-control-plaintext" 
+                        name="enganche" [(ngModel)]="enganche">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-6 col-form-label"><b>Bonificación Enganche:</b></label>
+                      <div class="col-sm-6">
+                        <input type="text" readonly class="form-control-plaintext" 
+                        name="bonificacion" [(ngModel)]="bonificacion">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-6 col-form-label"><b>Total:</b></label>
+                        <div class="col-sm-6">
+                          <input type="text" readonly class="form-control-plaintext" 
+                          name="total" [(ngModel)]="total">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+            </div>
+        </div>
+    </form>
+</div>

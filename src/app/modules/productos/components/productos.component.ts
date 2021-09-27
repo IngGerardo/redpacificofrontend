@@ -33,6 +33,7 @@ export class ProductosComponent implements OnInit {
   private productosService: ProductosService, private _el: ElementRef) {}
 
   ngOnInit() {
+    this.productos = [];
     this.cargarProductos();
   }
 
@@ -156,6 +157,13 @@ export class ProductosComponent implements OnInit {
     this.reverse = !this.reverse;
   }
 
+  /**
+  * evento que cambia la pagina en el paginador de la tabla.
+  *
+  * @author Gerardo Ortiz
+  * @return void
+  * @param event key
+  */
   public pageChanged(event):void {
     this.configPagination.currentPage = event;
     this.cargarProductos();
