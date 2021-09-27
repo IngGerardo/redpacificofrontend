@@ -1,0 +1,91 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <strong>Lista de Productos</strong>
+    </div>
+    <div class="card-body">
+      <form action="" method="post" class="form-horizontal" autocomplete="off">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="hf-email">Número de Producto: </label>
+          <div class="col-md-3">
+            <div class="form-group has-search">
+              <span class="fa fa-search form-control-feedback"></span>
+              <input type="text" class="form-control" onlyNumbers maxlength="8" placeholder="Buscar Número"
+              [(ngModel)]="numeroSeleccionado" name="numeroSeleccionado" [typeahead]="productos" 
+              typeaheadOptionField="idu_producto" (typeaheadNoResults)="typeaheadNoResultsNumber($event)" >
+              <div class="alert alert-danger" *ngIf="noResultNumero">No Resultados Encontrados</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="hf-email">Descripción del Producto: </label>
+          <div class="col-md-6">
+            <div class="form-group has-search">
+              <span class="fa fa-search form-control-feedback"></span>
+              <input type="text" class="form-control" onlyLetters maxlength="50" placeholder="Buscar Descripción"
+              [(ngModel)]="nombreSeleccionado" name="nombreSeleccionado" [typeahead]="productos" 
+              typeaheadOptionField="des_producto" (typeaheadNoResults)="typeaheadNoResultsName($event)" >
+              <div class="alert alert-danger" *ngIf="noResultNombre">No Resultados Encontrados</div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="pointer">
+              <tr>
+                <th (click)="sort('idu_producto')" class="text-center align-middle">Número Producto
+                  <i class="fa" [ngClass]="{'fa-sort': key != 'idu_producto', 'fa-sort-asc': (key == 'idu_producto' && reverse), 
+                  'fa-sort-desc': (key == 'idu_producto' && !reverse) }" aria-hidden="true"></i>
+                </th>
+                <th (click)="sort('des_producto')" class="text-center align-middle">Descripción
+                  <i class="fa" [ngClass]="{'fa-sort': key != 'des_producto', 'fa-sort-asc': (key == 'des_producto' && reverse), 
+                  'fa-sort-desc': (key == 'des_producto' && !reverse) }" aria-hidden="true"></i>
+                </th>
+                <th (click)="sort('des_modelo')" class="text-center align-middle">Modelo
+                  <i class="fa" [ngClass]="{'fa-sort': key != 'des_modelo', 'fa-sort-asc': (key == 'des_modelo' && reverse), 
+                  'fa-sort-desc': (key == 'des_modelo' && !reverse) }" aria-hidden="true"></i>
+                </th>
+                <th (click)="sort('num_precio')" class="text-center align-middle">Precio
+                  <i class="fa" [ngClass]="{'fa-sort': key != 'num_precio', 'fa-sort-asc': (key == 'num_precio' && reverse), 
+                  'fa-sort-desc': (key == 'num_precio' && !reverse) }" aria-hidden="true"></i>
+                </th>
+                <th (click)="sort('num_existencia')" class="text-center align-middle">Existencia
+                  <i class="fa" [ngClass]="{'fa-sort': key != 'num_existencia', 'fa-sort-asc': (key == 'num_existencia' && reverse), 
+                  'fa-sort-desc': (key == 'num_existencia' && !reverse) }" aria-hidden="true"></i>
+                </th>
+                <th class="text-center align-middle">
+                  <button tooltip="Agregar un nuevo producto." class="btn btn-sm btn-pill btn-primary" 
+                  type="button" (click)="agregarProducto()"><span class="fa fa-plus"> Nuevo</span></button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let producto of productos | orderBy: key : reverse : true | 
+              filterBy: {idu_producto: numeroSeleccionado, des_producto: nombreSeleccionado} | 
+              paginate: configPagination" style="cursor: pointer;">
+                <td class="text-center align-middle">{{ producto.idu_producto }}</td>
+                <td class="text-center align-middle">{{ producto.des_producto}}</td>
+                <td class="text-center align-middle">{{ producto.des_modelo }}</td>
+                <td class="text-center align-middle">{{ producto.num_precio | currency }}</td>
+                <td class="text-center align-middle">{{ producto.num_existencia }}</td>
+                <td class="text-center align-middle">
+                    <button tooltip="Actualizar producto." class="btn btn-sm btn-pill btn-success" 
+                    type="button" (click)="actualizarProducto(producto.idu_producto)"><span class="fa fa-edit"> Actualizar</span></button>
+                    <button tooltip="Eliminar producto." class="btn btn-sm btn-pill btn-danger" 
+                    type="button" (click)="eliminarProducto(producto.idu_producto)"><span class="fa fa-trash"> Eliminar</span></button>
+                </td>
+              </tr>
+              <tr [hidden]="productos.length == 0">
+                <td colspan="8" align="center">
+                  <pagination-controls (pageChange)="pageChanged($event);" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="card-footer">
+    </div>
+  </div>
+</div>

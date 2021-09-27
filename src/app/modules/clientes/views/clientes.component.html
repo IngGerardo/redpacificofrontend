@@ -1,0 +1,81 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <strong>Lista de Clientes</strong>
+    </div>
+    <div class="card-body">
+      <form action="" method="post" class="form-horizontal" autocomplete="off">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="hf-email">Número de Cliente: </label>
+          <div class="col-md-3">
+            <div class="form-group has-search">
+              <span class="fa fa-search form-control-feedback"></span>
+              <input type="text" class="form-control" onlyNumbers maxlength="8" placeholder="Buscar Número"
+              [(ngModel)]="numeroSeleccionado" name="numeroSeleccionado" [typeahead]="clientes" 
+              typeaheadOptionField="idu_cliente" (typeaheadNoResults)="typeaheadNoResultsNumber($event)" >
+              <div class="alert alert-danger" *ngIf="noResultNumero">No Resultados Encontrados</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="hf-email">Nombre del Cliente: </label>
+          <div class="col-md-6">
+            <div class="form-group has-search">
+              <span class="fa fa-search form-control-feedback"></span>
+              <input type="text" class="form-control" onlyLetters maxlength="50" placeholder="Buscar Nombre"
+              [(ngModel)]="nombreSeleccionado" name="nombreSeleccionado" [typeahead]="clientes" 
+              typeaheadOptionField="nom_cliente" (typeaheadNoResults)="typeaheadNoResultsName($event)" >
+              <div class="alert alert-danger" *ngIf="noResultNombre">No Resultados Encontrados</div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="pointer">
+              <tr>
+                <th (click)="sort('idu_cliente')" class="text-center align-middle">Número Cliente
+                  <i class="fa" [ngClass]="{'fa-sort': key != 'idu_cliente', 'fa-sort-asc': (key == 'idu_cliente' && reverse), 
+                  'fa-sort-desc': (key == 'idu_cliente' && !reverse) }" aria-hidden="true"></i>
+                </th>
+                <th (click)="sort('nom_cliente')" class="text-center align-middle">Nombre
+                  <i class="fa" [ngClass]="{'fa-sort': key != 'nom_cliente', 'fa-sort-asc': (key == 'nom_cliente' && reverse), 
+                  'fa-sort-desc': (key == 'nom_cliente' && !reverse) }" aria-hidden="true"></i>
+                </th>
+                <th (click)="sort('des_rfc')" class="text-center align-middle">RFC
+                  <i class="fa" [ngClass]="{'fa-sort': key != 'des_rfc', 'fa-sort-asc': (key == 'des_rfc' && reverse), 
+                  'fa-sort-desc': (key == 'des_rfc' && !reverse) }" aria-hidden="true"></i>
+                </th>
+                <th class="text-center align-middle">
+                  <button tooltip="Agregar un nuevo cliente." class="btn btn-sm btn-pill btn-primary" 
+                  type="button" (click)="agregarCliente()"><span class="fa fa-plus"> Nuevo</span></button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cliente of clientes | orderBy: key : reverse : true | 
+              filterBy: {idu_cliente: numeroSeleccionado, nom_cliente: nombreSeleccionado} | 
+              paginate: configPagination" style="cursor: pointer;">
+                <td class="text-center align-middle">{{ cliente.idu_cliente }}</td>
+                <td class="text-center align-middle">{{ cliente.nom_cliente + ' ' + cliente.des_apellidopaterno + ' ' + cliente.des_apellidomaterno }}</td>
+                <td class="text-center align-middle">{{ cliente.des_rfc }}</td>
+                <td class="text-center align-middle">
+                    <button tooltip="Actualizar cliente." class="btn btn-sm btn-pill btn-success" 
+                    type="button" (click)="actualizarCliente(cliente.idu_cliente)"><span class="fa fa-edit"> Actualizar</span></button>
+                    <button tooltip="Eliminar cliente." class="btn btn-sm btn-pill btn-danger" 
+                    type="button" (click)="eliminarCliente(cliente.idu_cliente)"><span class="fa fa-trash"> Eliminar</span></button>
+                </td>
+              </tr>
+              <tr [hidden]="clientes.length == 0">
+                <td colspan="8" align="center">
+                  <pagination-controls (pageChange)="pageChanged($event);" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="card-footer">
+    </div>
+  </div>
+</div>
